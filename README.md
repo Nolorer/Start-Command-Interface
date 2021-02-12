@@ -10,8 +10,9 @@ Press the key related to which action do you want to take.
 # Features
 -Changing background(Requires a restart)\
 -Turning off or restarting the computer(Useful in slow systems)\
--Add startup programs(Programs that start with the system)
+-Add startup programs(Programs that start with the system)\
+-Changing themes(Requires a restart) and toggling different theme settings
 
 # Compatibility
--Due to the use of Batch, it only works on Microsoft Windows.  
--The use of the Choice command makes this natively compatible with Windows XP or higher only.
+-Windows 8.1\
+-Windows 10
