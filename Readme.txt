@@ -28,6 +28,7 @@ SCI has options for different sections of the OS, this includes:
 -Startup
 -Shutdown and Restarting
 -Background
+-Mouse and Cursors
 
 4.Version History:
 
@@ -40,3 +41,11 @@ Adds options for Background changing, shutdown or restarting the computer and ad
 -1.1:
 
 Adds theme changing with extra options.
+
+-1.11:
+
+Organized the options into categories and added a option to restart the computer as a "first boot".
+
+-1.2:
+
+Adds cursor and mouse options.
