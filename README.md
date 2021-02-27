@@ -11,7 +11,7 @@ Open the executable and install to the default location(startup folder), after t
 Press the key related to which action do you want to take.
 
 # Features
--Changing background(Requires a restart)\
+-Desktop Settings\
 -Power settings\
 -Startup settings\
 -Theme settings\
