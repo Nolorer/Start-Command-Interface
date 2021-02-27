@@ -27,7 +27,7 @@ SCI has options for different sections of the OS, this includes:
 -Themes
 -Startup
 -Shutdown and Restarting
--Background
+-Background and Desktop
 -Mouse and Cursors
 
 4.Version History:
@@ -49,3 +49,12 @@ Organized the options into categories and added a option to restart the computer
 -1.2:
 
 Adds cursor and mouse options.
+
+-1.21:
+
+Adds new "desktop" category
+
+Moves the "change background" and adds a "toggle auto-colorization" option to the "desktop" category
+
+Adds a "start Command Prompt" and "restart Explorer" options on the main menu
+

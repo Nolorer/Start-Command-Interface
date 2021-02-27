@@ -1,35 +1,53 @@
 @echo off
 cls
 set %ERRORLEVEL%=0
+
 :menu1
 cls
-cd "C:\Users\%USERNAME%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
+cd "%AppData%\Microsoft\Windows\Start Menu\Programs\Startup"
 echo Welcome!
 echo.
-echo 1.Change Background
+echo 1.Desktop Settings
 echo 2.Theme Settings
 echo 3.Startup Settings
 echo 4.Power Settings
 echo 5.Mouse and Cursor Settings
+echo 6.Start the Command Prompt
+echo 7.Restart Explorer
 
 
-choice /c 12345 /m "Choose a option:"
+choice /c 1234567 /m "Choose a option:"
 
 echo.
-if %ERRORLEVEL%==1 (goto changebg)
+if %ERRORLEVEL%==1 (goto deskst)
 if %ERRORLEVEL%==2 (goto themest)
 if %ERRORLEVEL%==3 (goto startst)
 if %ERRORLEVEL%==4 (goto powerst)
 if %ERRORLEVEL%==5 (goto cursorst)
+if %ERRORLEVEL%==6 (start cmd.exe & goto menu1)
+if %ERRORLEVEL%==7 (
+	taskkill /f /im explorer.exe
+	start explorer.exe
+	goto menu1
+)
 
 
 
+:deskst
+echo 1.Change Background
+echo 2.Toggle Auto-Colorization
+
+choice /c 12 /m "Choose a option:"
+
+echo.
+if %ERRORLEVEL%==1 (goto changebg)
+if %ERRORLEVEL%==2 (goto autocol)
 
 :changebg
 set /p backprompt="Type the location of the file without the extension:"
 if exist "%backprompt%".png (
 
-	copy "%backprompt%".png "C:\Users\%USERNAME%\AppData\Roaming\Microsoft\Windows\Themes\TranscodedWallpaper" > nul
+	copy "%backprompt%".png "%AppData%\Microsoft\Windows\Themes\TranscodedWallpaper" > nul
 	pause
 	choice /c YN /m "You need to restart to apply the background, do you want to do it now?"
 	if %ERRORLEVEL%==1 (shutdown -r -f -t 0) else (goto menu1)
@@ -41,6 +59,13 @@ if exist "%backprompt%".png (
 	goto menu1
 	
 	)
+	
+:autocol
+choice /c YN /m "Do you want to have auto-colorization enabled?"
+
+if %ERRORLEVEL%==1 (reg add "HKCU\Control Panel\Desktop" /v AutoColorization /t REG_DWORD /d 1 /f & goto menu1)
+if %ERRORLEVEL%==2 (reg add "HKCU\Control Panel\Desktop" /v AutoColorization /t REG_DWORD /d 0 /f & goto menu1)
+
 	
 :themest
 cd "C:\Users\%USERNAME%\AppData\Local\Microsoft\Windows\Themes"
@@ -103,7 +128,7 @@ if %ERRORLEVEL%==2 (reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Expl
 set /p startprompt="Type the location of the file with the extension:"
 if exist "%startprompt%" (
 	
-	copy "%startprompt%" "C:\Users\%USERNAME%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" > nul
+	copy "%startprompt%" "%AppData%\Microsoft\Windows\Start Menu\Programs\Startup" > nul
 	pause
 	echo Done.
 	goto menu1
@@ -151,9 +176,6 @@ if %ERRORLEVEL%==1 (reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Expl
 if %ERRORLEVEL%==2 (reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shutdown" /v CleanShutdown /t REG_DWORD /d 0 /f & goto menu1)
 
 :cursorst
-
-echo Important Registry:HKCU\Control Panel\Cursors
-
 echo 1.Change Cursors
 echo 2.Mouse Settings
 
@@ -232,8 +254,6 @@ if exist "%cursorprompt%".cur (
 	)
 
 :cursorst_mousest
-
-echo Important:Important Registry:HKCU\Control Panel\Mouse
 echo 1.Toggle Extended Sounds
 echo 2.Toggle Trails
 echo 3.Toggle Button Swapping
@@ -288,8 +308,16 @@ if %ERRORLEVEL%==2 (reg add "HKCU\Control Panel\Mouse" /v Beep /t REG_SZ /d No /
 
 choice /c YN /m "Do you want to activate Window Tracking?"
 
-if %ERRORLEVEL%==1 (reg add "HKCU\Control Panel\Mouse" /v ActiveWindowTracking /t REG_SZ /d 1 /f & goto menu1)
-if %ERRORLEVEL%==2 (reg add "HKCU\Control Panel\Mouse" /v ActiveWindowTracking /t REG_SZ /d 0 /f & goto menu1)
+if %ERRORLEVEL%==1 (
+	reg add "HKCU\Control Panel\Mouse" /v ActiveWindowTracking /t REG_SZ /d 1 /f
+	reg add "HKCU\Control Panel\Desktop" /v ActiveWndTrackTimeout /t REG_SZ /d 1 /f
+	goto menu1
+)
+if %ERRORLEVEL%==2 (
+	reg add "HKCU\Control Panel\Mouse" /v ActiveWindowTracking /t REG_SZ /d 0 /f
+	reg add "HKCU\Control Panel\Desktop" /v ActiveWndTrackTimeout /t REG_SZ /d 0 /f
+	goto menu1
+)
 
 :cursorst_mousest_speed
 
